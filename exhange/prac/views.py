@@ -31,14 +31,18 @@ class home(ListView):
                     stock=stock,
                     buyer=buyer,
                 )
-                #Contestant.objects.filter(answer='1').update(age=SqlClause('age+2'))
-                stock_seller=stocks.objects.filter(user=seller)
-                print(stock_seller)
-                for i in stock_seller:
-                    print(i.get_attname_column())
-                stock_buyer=stocks.objects.filter(user=buyer)
-                print(stock_buyer)
-                #contact_me.save()
+                stock_seller=stocks.objects.get(user=seller)
+                stock_buyer=stocks.objects.get(user=buyer)
+                if stock=="stock1":
+                    stock_seller.stock1-=quantity
+                    stock_buyer.stock1+=quantity
+                    stock_seller.save()
+                    stock_buyer.save()
+                elif stock=="stock2":
+                    stock_seller.stock2-=quantity
+                    stock_buyer.stock2+=quantity
+                    stock_seller.save()
+                    stock_buyer.save()
                 return redirect('prac:home')
         except ObjectDoesNotExist:
             messages.error(self.request, "fill the form correctly")
